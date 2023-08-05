@@ -1,20 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomAreaPositioner : MonoBehaviour
+namespace Tools
 {
-    [SerializeField] private float XRange;
-    [SerializeField] private float ZRange;
-    [SerializeField] private float height;
-    void Start()
+    public class RandomAreaPositioner : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private float XRange;
+        [SerializeField] private float ZRange;
+        [SerializeField] private float height;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public Vector3 RandomizePosition(Vector3 position)
+        {
+            return new Vector3(position.x + Random.Range(-XRange, XRange), height, position.z + Random.Range(-ZRange, ZRange));
+        }
     }
 }
