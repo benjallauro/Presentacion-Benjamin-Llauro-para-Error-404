@@ -15,13 +15,18 @@ namespace PoolSystem
         {            
             timer.Start();
         }
+        public void ForceRecycle()
+        {
+            timer.StopAndReset();
+            GetComponent<PoolObject>().Recycle();
+        }
         
         private void Update()
         {
             if(timer.Update(Time.deltaTime))
             {
-                GetComponent<PoolObject>().Recycle();
                 timer.StopAndReset();
+                GetComponent<PoolObject>().Recycle();
             }
         }
     }
