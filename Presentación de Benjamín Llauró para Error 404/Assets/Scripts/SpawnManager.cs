@@ -13,6 +13,7 @@ public class SpawnManager : MonoBehaviour
 
     [Serializable] public class CustomEvent : UnityEvent { }
     public CustomEvent globalEventForObjects;
+    private bool on;
 
     private void Start()
     {
@@ -31,5 +32,14 @@ public class SpawnManager : MonoBehaviour
             timer.StopAndReset();
             timer.Start();
         }
+    }
+    public void StartSpawning()
+    {
+        timer.Start();
+        timer.SetTimer(timeBetweenSpawns);
+    }
+    public void StopSpawning()
+    {
+        timer.StopAndReset();
     }
 }
