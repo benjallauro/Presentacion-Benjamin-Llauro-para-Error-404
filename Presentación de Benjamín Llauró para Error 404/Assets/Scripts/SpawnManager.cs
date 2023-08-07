@@ -1,6 +1,8 @@
 using Tools;
 using PoolSystem;
 using UnityEngine;
+using System;
+using UnityEngine.Events;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -8,6 +10,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Pool objectPool1;
     [SerializeField] private RandomAreaPositioner randomAreaPositioner;
     private Timer timer;
+
+    [Serializable] public class CustomEvent : UnityEvent { }
+    public CustomEvent globalEventForObjects;
 
     private void Start()
     {
@@ -21,6 +26,7 @@ public class SpawnManager : MonoBehaviour
         {
             GameObject pooledObject = objectPool1.GetPooledObject().gameObject;
             pooledObject.transform.position = randomAreaPositioner.RandomizePosition(pooledObject.transform.position);
+            pooledObject.GetComponent<GlobalEventsCaller>().SetGlobalEvent(globalEventForObjects);
             pooledObject.GetComponent<RecycleAfterTime>().StartTimer();
             timer.StopAndReset();
             timer.Start();

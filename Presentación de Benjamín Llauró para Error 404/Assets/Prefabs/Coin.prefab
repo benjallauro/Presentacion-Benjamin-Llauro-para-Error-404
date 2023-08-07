@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7799890732568073021}
   - component: {fileID: 7142718673726854834}
   - component: {fileID: 7449483348574935702}
+  - component: {fileID: 8871758287358681695}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -145,6 +146,18 @@ MonoBehaviour:
   customEvent:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 8871758287358681695}
+        m_TargetAssemblyTypeName: GlobalEventsCaller, Assembly-CSharp
+        m_MethodName: CallEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 7142718673726854834}
         m_TargetAssemblyTypeName: PoolSystem.RecycleAfterTime, Assembly-CSharp
         m_MethodName: ForceRecycle
@@ -157,3 +170,15 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8871758287358681695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591165099382186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f702ca4f07d8b64e8ebb8825ce0c4a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
