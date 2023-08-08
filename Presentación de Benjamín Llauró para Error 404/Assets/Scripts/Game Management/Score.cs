@@ -1,3 +1,4 @@
+using PoolSystem;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,6 +7,7 @@ namespace ScoreSystem
 {
     public class Score : MonoBehaviour
     {
+        private static Score instance = null;
         [Serializable] public class CustomEvent : UnityEvent { }
         public CustomEvent scoreChangeEvent;
         public CustomEvent winEvent;
@@ -13,6 +15,17 @@ namespace ScoreSystem
 
         [SerializeField] private int _scoreToWin = 0; //won't be serializable in the future
 
+        public static Score GetInstance()
+        {
+            if (instance == null)
+                instance = FindObjectOfType<Score>();
+            return instance;
+        }
+        void Awake()
+        {
+            instance = this;
+            Pool[] ps = GetComponentsInChildren<Pool>();
+        }
         public int GetScore() { return _score; }
 
         public void AddScore(int scoreToAdd)
@@ -25,8 +38,11 @@ namespace ScoreSystem
 
         public void SubstractScore(int scoreToSubstract)
         {
-            _score -= scoreToSubstract;
-            scoreChangeEvent.Invoke();
+            if(_score > 0)
+            {
+                _score -= scoreToSubstract;
+                scoreChangeEvent.Invoke();
+            }
         }
         public void SetScoreToWin(int scoreToWin)
         {

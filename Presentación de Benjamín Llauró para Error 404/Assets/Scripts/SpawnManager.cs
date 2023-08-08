@@ -7,30 +7,37 @@ using UnityEngine.Events;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private float timeBetweenSpawns;
-    [SerializeField] private Pool objectPool1;
+    [SerializeField] private Pool[] objectPools;
     [SerializeField] private RandomAreaPositioner randomAreaPositioner;
     private Timer timer;
 
     [Serializable] public class CustomEvent : UnityEvent { }
-    public CustomEvent globalEventForObjects;
+    public CustomEvent[] globalEventForObjects;
     private bool on;
+    private int _poolsAmount;
+    private int _currentPool;
 
     private void Start()
     {
         timer = new Timer();
         timer.Start();
         timer.SetTimer(timeBetweenSpawns);
+        _poolsAmount = objectPools.Length;
+        _currentPool = 0;
     }
     private void Update()
     {
-        if(timer.Update(Time.deltaTime))
+        if(_currentPool >= _poolsAmount)
+            _currentPool = 0; 
+        if(timer.Update(Time.deltaTime) && objectPools.Length > 0)
         {
-            GameObject pooledObject = objectPool1.GetPooledObject().gameObject;
+            GameObject pooledObject = objectPools[_currentPool].GetPooledObject().gameObject;
             pooledObject.transform.position = randomAreaPositioner.RandomizePosition(pooledObject.transform.position);
-            pooledObject.GetComponent<GlobalEventsCaller>().SetGlobalEvent(globalEventForObjects);
+            pooledObject.GetComponent<GlobalEventsCaller>().SetGlobalEvent(globalEventForObjects[_currentPool]);
             pooledObject.GetComponent<RecycleAfterTime>().StartTimer();
             timer.StopAndReset();
             timer.Start();
+            _currentPool++;
         }
     }
     public void StartSpawning()

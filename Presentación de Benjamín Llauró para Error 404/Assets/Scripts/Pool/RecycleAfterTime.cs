@@ -1,3 +1,4 @@
+using ScoreSystem;
 using Tools;
 using UnityEngine;
 namespace PoolSystem
@@ -5,6 +6,7 @@ namespace PoolSystem
     public class RecycleAfterTime : MonoBehaviour
     {
         [SerializeField] private float secondsBeforeRecycle;
+        [SerializeField] private int scorePenalty;
         private Timer timer;
         private void Awake()
         {
@@ -27,6 +29,7 @@ namespace PoolSystem
             {
                 timer.StopAndReset();
                 GetComponent<PoolObject>().Recycle();
+                Score.GetInstance().SubstractScore(scorePenalty);
             }
         }
     }
