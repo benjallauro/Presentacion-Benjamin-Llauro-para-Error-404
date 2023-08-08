@@ -4,17 +4,20 @@ using UnityEngine.Events;
 
 public class SelectObject : MonoBehaviour
 {
-    Vector3 mousePosition;
+    [SerializeField] private int clicksRequired = 1;
+    private int _clicksAmount = 0;
     [Serializable] public class CustomEvent : UnityEvent { }
     public CustomEvent customEvent;
-    private Vector3 GetMousePos()
+
+    public void ResetClicks()
     {
-        return Camera.main.WorldToScreenPoint(transform.position);
+        _clicksAmount = 0;
     }
 
     private void OnMouseDown()
     {
-        customEvent.Invoke();
-        //mousePosition = Input.mousePosition - GetMousePos(); 
+        _clicksAmount++;
+        if(_clicksAmount >= clicksRequired)
+            customEvent.Invoke();
     }
 }

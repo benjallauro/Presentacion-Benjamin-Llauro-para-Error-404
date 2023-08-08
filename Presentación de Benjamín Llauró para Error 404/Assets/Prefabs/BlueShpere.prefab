@@ -117,7 +117,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secondsBeforeRecycle: 5
-  scorePenalty: 1
+  recycleEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8871758287358681695}
+        m_TargetAssemblyTypeName: GlobalEventsCaller, Assembly-CSharp
+        m_MethodName: CallEvent2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7449483348574935702}
+        m_TargetAssemblyTypeName: SelectObject, Assembly-CSharp
+        m_MethodName: ResetClicks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7449483348574935702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93936a15c13f0644a826cebb1f94cb03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clicksRequired: 1
   customEvent:
     m_PersistentCalls:
       m_Calls:

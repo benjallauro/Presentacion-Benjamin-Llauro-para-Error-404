@@ -9,13 +9,20 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private float timeBetweenSpawns;
     [SerializeField] private Pool[] objectPools;
     [SerializeField] private RandomAreaPositioner randomAreaPositioner;
+    [SerializeField] private int objectsGrantedForClickingTarget;
+    [SerializeField] private int targetRewardObjectPoolNumber;
     private Timer timer;
 
     [Serializable] public class CustomEvent : UnityEvent { }
     public CustomEvent[] globalEventForObjects;
+    public CustomEvent[] globalOutliveEventForObjects; //The event that should be called when the object recycles itself by outliving it's time limit.
     private bool on;
     private int _poolsAmount;
     private int _currentPool;
+
+    private bool _inTargetEffect = false;
+    int _currentTargetObjectsDropped = 0;
+
 
     private void Start()
     {
@@ -31,13 +38,29 @@ public class SpawnManager : MonoBehaviour
             _currentPool = 0; 
         if(timer.Update(Time.deltaTime) && objectPools.Length > 0)
         {
-            GameObject pooledObject = objectPools[_currentPool].GetPooledObject().gameObject;
+            int poolToSelect;
+            if (_inTargetEffect)
+            {
+                poolToSelect = targetRewardObjectPoolNumber;
+                _currentTargetObjectsDropped++;
+            }
+            else
+                poolToSelect = _currentPool;
+            GameObject pooledObject = objectPools[poolToSelect].GetPooledObject().gameObject;
             pooledObject.transform.position = randomAreaPositioner.RandomizePosition(pooledObject.transform.position);
-            pooledObject.GetComponent<GlobalEventsCaller>().SetGlobalEvent(globalEventForObjects[_currentPool]);
+            GlobalEventsCaller globalEventsCaller = pooledObject.GetComponent<GlobalEventsCaller>();
+            globalEventsCaller.SetGlobalEvent(globalEventForObjects[poolToSelect]);
+            globalEventsCaller.SetGlobalEvent2(globalOutliveEventForObjects[poolToSelect]);
             pooledObject.GetComponent<RecycleAfterTime>().StartTimer();
             timer.StopAndReset();
             timer.Start();
-            _currentPool++;
+            if(!_inTargetEffect)
+                _currentPool++;
+            if (_currentTargetObjectsDropped >= objectsGrantedForClickingTarget)
+            {
+                _inTargetEffect = false;
+                _currentTargetObjectsDropped = 0;
+            }
         }
     }
     public void StartSpawning()
@@ -48,5 +71,10 @@ public class SpawnManager : MonoBehaviour
     public void StopSpawning()
     {
         timer.StopAndReset();
+    }
+    public void EnableTargetEffect()
+    {
+        _inTargetEffect = true;
+        _currentTargetObjectsDropped = 0;
     }
 }

@@ -117,7 +117,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   secondsBeforeRecycle: 5
-  scorePenalty: 1
+  recycleEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8871758287358681695}
+        m_TargetAssemblyTypeName: GlobalEventsCaller, Assembly-CSharp
+        m_MethodName: CallEvent2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7449483348574935702
 MonoBehaviour:
   m_ObjectHideFlags: 0
