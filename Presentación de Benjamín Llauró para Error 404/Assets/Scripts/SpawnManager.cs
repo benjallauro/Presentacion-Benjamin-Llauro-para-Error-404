@@ -3,6 +3,7 @@ using PoolSystem;
 using UnityEngine;
 using System;
 using UnityEngine.Events;
+using GameManagement;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private int objectsGrantedForClickingTarget;
     [SerializeField] private int targetRewardObjectPoolNumber;
     private Timer timer;
+    private Difficulty _difficulty;
 
     [Serializable] public class CustomEvent : UnityEvent { }
     public CustomEvent[] globalEventForObjects;
@@ -22,11 +24,14 @@ public class SpawnManager : MonoBehaviour
     int _currentTargetObjectsDropped = 0;
 
 
-    private void Start()
+    private void Awake()
     {
         timer = new Timer();
+    }
+    public void StartSpawning()
+    {
+        timer.SetTimer(UnityEngine.Random.Range(_difficulty.minimumTimeBetweenSpawns, _difficulty.maximumTimeBetweenSpawns));
         timer.Start();
-        timer.SetTimer(UnityEngine.Random.Range(minTimeBetweenSpawns, maxTimeBetweenSpawns));
     }
     private void Update()
     {
@@ -47,6 +52,7 @@ public class SpawnManager : MonoBehaviour
             globalEventsCaller.SetGlobalEvent2(globalOutliveEventForObjects[poolToSelect]);
             pooledObject.GetComponent<RecycleAfterTime>().StartTimer();
             timer.StopAndReset();
+            timer.SetTimer(UnityEngine.Random.Range(_difficulty.minimumTimeBetweenSpawns, _difficulty.maximumTimeBetweenSpawns));
             timer.Start();
             if (_currentTargetObjectsDropped >= objectsGrantedForClickingTarget)
             {
@@ -55,10 +61,9 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
-    public void StartSpawning()
+    public void SetDifficultyLevel(Difficulty difficulty)
     {
-        timer.Start();
-        timer.SetTimer(UnityEngine.Random.Range(minTimeBetweenSpawns, maxTimeBetweenSpawns));
+        _difficulty = difficulty;
     }
     public void StopSpawning()
     {

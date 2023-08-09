@@ -11,18 +11,10 @@ namespace GameManagement
         [Serializable] public class CustomEvent : UnityEvent { }
         [SerializeField] private float fullGameTimeSeconds;
         [SerializeField] private HUDText timeText;
+        [SerializeField] private  SpawnManager spawnManager;
         public CustomEvent winEvent;
         public CustomEvent loseEvent;
         private ReverseTimer timer;
-        private void Awake()
-        {
-            timer = new ReverseTimer();
-            timer.SetTimer(fullGameTimeSeconds);
-        }
-        private void Start()
-        {
-            StartGame();
-        }
         enum GameStates
         {
             playing,
@@ -30,12 +22,36 @@ namespace GameManagement
             lost
         }
         GameStates currentState = GameStates.playing;
+
+        #region UnityMethods
+        private void Awake()
+        {
+            timer = new ReverseTimer();
+            timer.SetTimer(fullGameTimeSeconds);
+        }
+        private void Update()
+        {
+            if (timer.Update(Time.deltaTime) && currentState == GameStates.playing)
+            {
+                LoseGame();
+            }
+            if (currentState == GameStates.playing)
+                timeText.UpdateText((int)timer.GetCurrentTime());
+        }
+        private void Start()
+        {
+            StartGame();
+        }
+        #endregion
         public void StartGame()
         {
             currentState = GameStates.playing;
+            SetDifficulty();
             timer.StopAndReset();
             timer.Start();
+            spawnManager.StartSpawning();
         }
+        #region Victory/Defeat
         public void WinGame()
         {
             currentState = GameStates.win;
@@ -48,14 +64,10 @@ namespace GameManagement
             loseEvent.Invoke();
             timer.StopAndReset();
         }
-        private void Update()
+        #endregion
+        public void SetDifficulty()
         {
-            if(timer.Update(Time.deltaTime) && currentState == GameStates.playing)
-            {
-                LoseGame();
-            }
-            if(currentState == GameStates.playing)
-                timeText.UpdateText((int)timer.GetCurrentTime());
+            spawnManager.SetDifficultyLevel(DifficultyManager.GetInstance().GetSelectedDifficulty());
         }
     }
 }

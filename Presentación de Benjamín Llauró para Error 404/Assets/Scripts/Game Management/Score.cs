@@ -13,7 +13,7 @@ namespace ScoreSystem
         public CustomEvent winEvent;
         private int _score = 0;
 
-        [SerializeField] private int _scoreToWin = 0; //won't be serializable in the future
+        [SerializeField] private int _scoreToWin = 0;
 
         public static Score GetInstance()
         {
