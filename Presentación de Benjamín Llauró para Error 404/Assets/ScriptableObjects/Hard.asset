@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Hard
   m_EditorClassIdentifier: 
   minimumTimeBetweenSpawns: 1
-  maximumTimeBetweenSpawns: 1.5
+  maximumTimeBetweenSpawns: 2
   minimumObjectsPerSpawn: 2
   maximumObjectsPerSpawn: 4
