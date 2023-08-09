@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bbd7f551539bc24f99cfdbbf7ed4b15, type: 3}
   m_Name: Easy
   m_EditorClassIdentifier: 
-  level: 1
   minimumTimeBetweenSpawns: 3
   maximumTimeBetweenSpawns: 4
   minimumObjectsPerSpawn: 1
-  maximumObjectsPerSpawn: 1
+  maximumObjectsPerSpawn: 2
+  objectPercentages:
+  - 40
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10

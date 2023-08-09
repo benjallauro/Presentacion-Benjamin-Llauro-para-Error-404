@@ -22,11 +22,13 @@ public class SpawnManager : MonoBehaviour
 
     private bool _inTargetEffect = false;
     int _currentTargetObjectsDropped = 0;
+    private RandomWithChances randomChances;
 
 
     private void Awake()
     {
         timer = new Timer();
+        randomChances = new RandomWithChances();
     }
     public void StartSpawning()
     {
@@ -38,8 +40,8 @@ public class SpawnManager : MonoBehaviour
         if(timer.Update(Time.deltaTime) && objectPools.Length > 0)
         {
             int objectsToSpawn = UnityEngine.Random.Range(_difficulty.minimumObjectsPerSpawn, _difficulty.maximumObjectsPerSpawn);
-
-            for(int i = 0; i < objectsToSpawn; i++)
+            float[] objectPercentages = _difficulty.objectPercentages;
+            for (int i = 0; i < objectsToSpawn; i++)
             {
                 int poolToSelect;
                 if (_inTargetEffect)
@@ -48,7 +50,8 @@ public class SpawnManager : MonoBehaviour
                     _currentTargetObjectsDropped++;
                 }
                 else
-                    poolToSelect = UnityEngine.Random.Range(0, objectPools.Length);
+                    poolToSelect = randomChances.Choose(objectPercentages);
+                    //poolToSelect = UnityEngine.Random.Range(0, objectPools.Length);
                 GameObject pooledObject = objectPools[poolToSelect].GetPooledObject().gameObject;
                 pooledObject.transform.position = randomAreaPositioner.RandomizePosition(pooledObject.transform.position);
                 GlobalEventsCaller globalEventsCaller = pooledObject.GetComponent<GlobalEventsCaller>();

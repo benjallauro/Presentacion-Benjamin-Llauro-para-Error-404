@@ -16,3 +16,10 @@ MonoBehaviour:
   maximumTimeBetweenSpawns: 2
   minimumObjectsPerSpawn: 2
   maximumObjectsPerSpawn: 4
+  objectPercentages:
+  - 10
+  - 10
+  - 10
+  - 30
+  - 30
+  - 10

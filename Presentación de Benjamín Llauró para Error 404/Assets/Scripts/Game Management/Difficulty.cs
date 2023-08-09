@@ -9,5 +9,6 @@ namespace GameManagement
         public float maximumTimeBetweenSpawns;
         public int minimumObjectsPerSpawn;
         public int maximumObjectsPerSpawn;
+        public float[] objectPercentages;
     }
 }

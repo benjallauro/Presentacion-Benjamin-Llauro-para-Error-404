@@ -12,8 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bbd7f551539bc24f99cfdbbf7ed4b15, type: 3}
   m_Name: Normal
   m_EditorClassIdentifier: 
-  level: 2
   minimumTimeBetweenSpawns: 3
   maximumTimeBetweenSpawns: 3.5
   minimumObjectsPerSpawn: 1
-  maximumObjectsPerSpawn: 2
+  maximumObjectsPerSpawn: 3
+  objectPercentages:
+  - 16.6
+  - 16.6
+  - 16.6
+  - 16.6
+  - 16.6
+  - 16.6
