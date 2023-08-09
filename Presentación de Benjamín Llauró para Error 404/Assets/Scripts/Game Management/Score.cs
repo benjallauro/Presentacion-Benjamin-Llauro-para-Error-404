@@ -1,7 +1,7 @@
-using PoolSystem;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using PoolSystem;
 
 namespace ScoreSystem
 {
@@ -38,11 +38,10 @@ namespace ScoreSystem
 
         public void SubstractScore(int scoreToSubstract)
         {
-            if(_score > 0)
-            {
-                _score -= scoreToSubstract;
-                scoreChangeEvent.Invoke();
-            }
+            _score -= scoreToSubstract;
+            if (_score < 0)
+                _score = 0;
+            scoreChangeEvent.Invoke();
         }
         public void SetScoreToWin(int scoreToWin)
         {

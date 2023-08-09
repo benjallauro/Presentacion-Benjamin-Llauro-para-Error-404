@@ -6,7 +6,8 @@ using UnityEngine.Events;
 
 public class SpawnManager : MonoBehaviour
 {
-    [SerializeField] private float timeBetweenSpawns;
+    [SerializeField] private float minTimeBetweenSpawns;
+    [SerializeField] private float maxTimeBetweenSpawns;
     [SerializeField] private Pool[] objectPools;
     [SerializeField] private RandomAreaPositioner randomAreaPositioner;
     [SerializeField] private int objectsGrantedForClickingTarget;
@@ -16,9 +17,6 @@ public class SpawnManager : MonoBehaviour
     [Serializable] public class CustomEvent : UnityEvent { }
     public CustomEvent[] globalEventForObjects;
     public CustomEvent[] globalOutliveEventForObjects; //The event that should be called when the object recycles itself by outliving it's time limit.
-    private bool on;
-    private int _poolsAmount;
-    private int _currentPool;
 
     private bool _inTargetEffect = false;
     int _currentTargetObjectsDropped = 0;
@@ -28,14 +26,10 @@ public class SpawnManager : MonoBehaviour
     {
         timer = new Timer();
         timer.Start();
-        timer.SetTimer(timeBetweenSpawns);
-        _poolsAmount = objectPools.Length;
-        _currentPool = 0;
+        timer.SetTimer(UnityEngine.Random.Range(minTimeBetweenSpawns, maxTimeBetweenSpawns));
     }
     private void Update()
     {
-        if(_currentPool >= _poolsAmount)
-            _currentPool = 0; 
         if(timer.Update(Time.deltaTime) && objectPools.Length > 0)
         {
             int poolToSelect;
@@ -45,7 +39,7 @@ public class SpawnManager : MonoBehaviour
                 _currentTargetObjectsDropped++;
             }
             else
-                poolToSelect = _currentPool;
+                poolToSelect = UnityEngine.Random.Range(0, objectPools.Length);
             GameObject pooledObject = objectPools[poolToSelect].GetPooledObject().gameObject;
             pooledObject.transform.position = randomAreaPositioner.RandomizePosition(pooledObject.transform.position);
             GlobalEventsCaller globalEventsCaller = pooledObject.GetComponent<GlobalEventsCaller>();
@@ -54,8 +48,6 @@ public class SpawnManager : MonoBehaviour
             pooledObject.GetComponent<RecycleAfterTime>().StartTimer();
             timer.StopAndReset();
             timer.Start();
-            if(!_inTargetEffect)
-                _currentPool++;
             if (_currentTargetObjectsDropped >= objectsGrantedForClickingTarget)
             {
                 _inTargetEffect = false;
@@ -66,7 +58,7 @@ public class SpawnManager : MonoBehaviour
     public void StartSpawning()
     {
         timer.Start();
-        timer.SetTimer(timeBetweenSpawns);
+        timer.SetTimer(UnityEngine.Random.Range(minTimeBetweenSpawns, maxTimeBetweenSpawns));
     }
     public void StopSpawning()
     {
