@@ -32,19 +32,22 @@ namespace ScoreSystem
 
         public void AddScore(int scoreToAdd)
         {
-            if(_scoreLocked) return;
+            if(_scoreLocked)
+                return;
             _score += scoreToAdd;
             scoreChangeEvent.Invoke();
             if (_score >= _scoreToWin)
             {
-                winEvent.Invoke();
+                _score = _scoreToWin;
                 LockScore(true);
+                winEvent.Invoke();
             }
         }
 
         public void SubstractScore(int scoreToSubstract)
         {
-            if (_scoreLocked) return;
+            if (_scoreLocked)
+                return;
             _score -= scoreToSubstract;
             if (_score < 0)
                 _score = 0;

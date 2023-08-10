@@ -10,7 +10,7 @@ namespace GameManagement
     {
         [Serializable] public class CustomEvent : UnityEvent { }
         [SerializeField] private float fullGameTimeSeconds;
-        [SerializeField] private HUDText timeText;
+        [SerializeField] private TimeHudText timeText;
         [SerializeField] private  SpawnManager spawnManager;
         [SerializeField] private Difficulty defaultDifficulty;
         public CustomEvent winEvent;
@@ -37,7 +37,7 @@ namespace GameManagement
                 LoseGame();
             }
             if (currentState == GameStates.playing)
-                timeText.UpdateText((int)timer.GetCurrentTime());
+                timeText.UpdateText(timer.GetCurrentTime());
         }
         private void Start()
         {
@@ -79,6 +79,5 @@ namespace GameManagement
             timer.StopAndReset();
         }
         #endregion
-
     }
 }
