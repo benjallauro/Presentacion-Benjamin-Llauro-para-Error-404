@@ -860,7 +860,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d589b5f29c7bb6949a4cd03238410084, type: 2}
   - {fileID: 11400000, guid: b5c2231adc95f8e4caf55af3732740f5, type: 2}
   - {fileID: 11400000, guid: e20acd3ae4e2ac74aaef6e70584962dc, type: 2}
-  defaultDifficulty: {fileID: 0}
+  defaultDifficulty: {fileID: 11400000, guid: b5c2231adc95f8e4caf55af3732740f5, type: 2}
 --- !u!4 &1252559823
 Transform:
   m_ObjectHideFlags: 0
@@ -962,7 +962,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1252559822}
         m_TargetAssemblyTypeName: GameManagement.DifficultyManager, Assembly-CSharp
-        m_MethodName: SetSelectedLevel
+        m_MethodName: SetSelectedLevelGlobal
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1108,7 +1108,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1252559822}
         m_TargetAssemblyTypeName: GameManagement.DifficultyManager, Assembly-CSharp
-        m_MethodName: SetSelectedLevel
+        m_MethodName: SetSelectedLevelGlobal
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1254,7 +1254,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1252559822}
         m_TargetAssemblyTypeName: GameManagement.DifficultyManager, Assembly-CSharp
-        m_MethodName: SetSelectedLevel
+        m_MethodName: SetSelectedLevelGlobal
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -11,11 +11,25 @@ namespace PoolSystem
         private Timer timer;
         [Serializable] public class CustomEvent : UnityEvent { }
         public CustomEvent recycleEvent;
+
+        #region Unity Methods
         private void Awake()
         {
             timer = new Timer();
             timer.SetTimer(secondsBeforeRecycle);
         }
+        private void Update()
+        {
+            if (timer.Update(Time.deltaTime))
+            {
+                timer.StopAndReset();
+                recycleEvent.Invoke();
+                GetComponent<PoolObject>().Recycle();
+            }
+        }
+        #endregion
+
+        #region Public Methods
         public void StartTimer()
         {            
             timer.Start();
@@ -25,15 +39,6 @@ namespace PoolSystem
             timer.StopAndReset();
             GetComponent<PoolObject>().Recycle();
         }
-        
-        private void Update()
-        {
-            if(timer.Update(Time.deltaTime))
-            {
-                timer.StopAndReset();
-                recycleEvent.Invoke();
-                GetComponent<PoolObject>().Recycle();
-            }
-        }
+        #endregion
     }
 }

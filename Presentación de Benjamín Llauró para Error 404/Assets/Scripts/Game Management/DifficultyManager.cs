@@ -1,10 +1,6 @@
-using System;
 using UnityEngine;
-using UnityEngine.Events;
-
 namespace GameManagement
 {
-    
     public class DifficultyManager : MonoBehaviour
     {
         [SerializeField] private Difficulty[] difficulties;
@@ -23,6 +19,7 @@ namespace GameManagement
             return instance;
         }
         public void SetSelectedLevel(int levelSelected) { _levelSelected = levelSelected; }
+        public void SetSelectedLevelGlobal(int levelSelected) { DifficultyManager.GetInstance().SetSelectedLevel(levelSelected); }
         public Difficulty GetSelectedDifficulty()
         {
             if (difficulties[_levelSelected] == null)

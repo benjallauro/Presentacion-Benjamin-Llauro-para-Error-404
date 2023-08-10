@@ -12,6 +12,7 @@ namespace GameManagement
         [SerializeField] private float fullGameTimeSeconds;
         [SerializeField] private HUDText timeText;
         [SerializeField] private  SpawnManager spawnManager;
+        [SerializeField] private Difficulty defaultDifficulty;
         public CustomEvent winEvent;
         public CustomEvent loseEvent;
         private ReverseTimer timer;
@@ -23,7 +24,7 @@ namespace GameManagement
         }
         GameStates currentState = GameStates.playing;
 
-        #region UnityMethods
+        #region Unity Methods
         private void Awake()
         {
             timer = new ReverseTimer();
@@ -43,6 +44,8 @@ namespace GameManagement
             StartGame();
         }
         #endregion
+
+        #region Public Methods
         public void StartGame()
         {
             currentState = GameStates.playing;
@@ -51,6 +54,17 @@ namespace GameManagement
             timer.Start();
             spawnManager.StartSpawning();
         }
+        public void SetDifficulty()
+        {
+            DifficultyManager difficultyManager = DifficultyManager.GetInstance();
+
+            if (difficultyManager != null)
+                spawnManager.SetDifficultyLevel(difficultyManager.GetSelectedDifficulty());
+            else
+                spawnManager.SetDifficultyLevel(defaultDifficulty);
+        }
+        #endregion
+
         #region Victory/Defeat
         public void WinGame()
         {
@@ -65,9 +79,6 @@ namespace GameManagement
             timer.StopAndReset();
         }
         #endregion
-        public void SetDifficulty()
-        {
-            spawnManager.SetDifficultyLevel(DifficultyManager.GetInstance().GetSelectedDifficulty());
-        }
+
     }
 }

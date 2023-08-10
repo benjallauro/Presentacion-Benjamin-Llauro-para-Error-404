@@ -13,6 +13,7 @@ namespace Tools
         private float restartAccum = 0.0f;
         private State state = State.None;
 
+        #region Management Orders
         public void Start()
         {
             state = State.Running;
@@ -30,6 +31,9 @@ namespace Tools
             accum = time;
             restartAccum = time;
         }
+        #endregion
+
+        #region Getters
         public bool GetStarted()
         {
             if (state == State.Running)
@@ -48,6 +52,8 @@ namespace Tools
         {
             return accum;
         }
+        #endregion
+
         public bool Update(float dt)
         {
             if (state == State.Running)

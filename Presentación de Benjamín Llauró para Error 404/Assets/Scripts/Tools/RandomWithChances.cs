@@ -2,7 +2,7 @@ namespace Tools
 {
     public class RandomWithChances
     {
-        public int Choose(float[] probs)
+        public int Choose(float[] probs) //Recieves an array with chance percentages, makes a choice and returns it
         {
             float total = 0;
 

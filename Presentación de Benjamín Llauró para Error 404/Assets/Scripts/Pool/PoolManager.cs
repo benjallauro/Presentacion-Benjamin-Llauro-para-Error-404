@@ -1,38 +1,40 @@
 ﻿using System.Collections.Generic;
-using PoolSystem;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+namespace PoolSystem
 {
-    private static PoolManager instance = null;
-    private Dictionary<string, Pool> pools = new Dictionary<string, Pool>();
-    public static PoolManager GetInstance()
+    public class PoolManager : MonoBehaviour
     {
-        if (instance == null)
-            instance = FindObjectOfType<PoolManager>();
-        return instance;
-    }
-    void Awake()
-    {
-        instance = this;
-        Pool[] ps = GetComponentsInChildren<Pool>();
-
-        foreach (Pool p in ps)
+        private static PoolManager instance = null;
+        private Dictionary<string, Pool> pools = new Dictionary<string, Pool>();
+        public static PoolManager GetInstance()
         {
-            if (pools.ContainsKey(p.gameObject.name))
+            if (instance == null)
+                instance = FindObjectOfType<PoolManager>();
+            return instance;
+        }
+        private void Awake()
+        {
+            instance = this;
+            Pool[] ps = GetComponentsInChildren<Pool>();
+    
+            foreach (Pool p in ps)
             {
-                //Debug.LogError("El pool" + p.gameObject.name + " ya existe.");
-            }
-            else
-            {
-                pools[p.gameObject.name] = p;
+                if (pools.ContainsKey(p.gameObject.name))
+                {
+                    //Debug.LogError("El pool" + p.gameObject.name + " ya existe.");
+                }
+                else
+                {
+                    pools[p.gameObject.name] = p;
+                }
             }
         }
-    }
-    public Pool GetPool(string name)
-    {
-        if (pools.ContainsKey(name))
-            return pools[name];
-        return null;
+        public Pool GetPool(string name)
+        {
+            if (pools.ContainsKey(name))
+                return pools[name];
+            return null;
+        }
     }
 }
